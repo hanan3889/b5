@@ -1,0 +1,44 @@
+name: bloc5-dev
+
+services:
+  web-dev:
+    env_file:
+      - .env.dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APACHE_CONF: dev.conf
+    container_name: videgrenier-web-dev
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db-dev
+    environment:
+      - APP_ENV
+      - DB_HOST
+      - DB_DATABASE
+      - DB_USERNAME
+      - DB_PASSWORD
+
+  db-dev:
+    env_file:
+      - .env.dev
+    image: mysql:8
+    container_name: videgrenier-db-dev
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data_dev:/var/lib/mysql
+      - ./sql/import.sql:/docker-entrypoint-initdb.d/import.sql
+
+volumes:
+  db_data_dev:
