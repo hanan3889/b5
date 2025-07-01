@@ -4,10 +4,10 @@
 echo "🚀 Démarrage de l'environnement PROD..."
 
 # Passe à la branche principale du dépôt Git
-git checkout main
+git checkout master
 
 # Met à jour la branche locale avec les dernières modifications du dépôt distant
-git pull origin main
+git pull origin master
 
 # Utilise Docker Compose pour construire et démarrer les conteneurs définis dans le fichier docker-compose.prod.yaml
 # -p : Spécifie un nom de projet pour les conteneurs et autres ressources
